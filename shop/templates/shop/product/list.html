@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock %}
+{% block category %}
+<li class='nav-item btn btn-secondary'>
+    <a class="nav-link active" href="{% url "shop:product_list" %}">Все</a>
+</li>
+{% for c in categories %}
+<li class='nav-item btn btn-secondary'>
+    <a class="nav-link active" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+</li>
+{% endfor %}
+{% endblock category %}
+
+{% block content %}
+<section class="section-products">
+    <div class="">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-6 col-lg-4 col-xl-3 pb-5 border">
+                <div id='product_img' style="background:url({% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}) no-repeat center" class="single-product">
+                    <div class="part-1">
+                        <ul>
+                            <li><a href="{{ product.get_absolute_url }}"><i class="fas fa-expand"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="part-2">
+                        <h3 class="product-title">{{ product.name }}</h3>
+                        <h4 class="product-price">{{ product.price }} руб.</h4>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

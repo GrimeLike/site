@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+
+
+{% block title %}Профиль пользователя{% endblock title %}
+
+
+{% block content %}
+    
+    
+    <h2>Профиль пользователя {{ user.username }}</h2>
+    <hr>
+          <button type="button" name="" id="" class="btn btn-block btn-secondary"><h5>Ваши заказы:</h5></button>
+    <hr>
+   
+    
+    {% for order in orders %}   
+    <h2 class='btn btn-primary'>Номер заказа #{{order.id}}</h2> 
+    <table class='table'>
+        <tr>
+            <th>Created</th>
+            <td>{{ order.created }}</td>
+        </tr>
+        <tr>
+            <th>Customer</th>
+            <td>{{ order.first_name }} {{ order.last_name }}</td>
+        </tr>
+        <tr>
+            <th>E-mail</th>
+            <td><a href="mailto:{{ order.email }}">{{ order.email }}</a></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ order.address }}, {{ order.postal_code }} {{ order.city }}</td>
+        </tr>
+        <tr>
+            <th>Total amount</th>
+            <td>${{ order.get_total_cost }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{% if order.paid %}Paid{% else %}Pending payment{% endif %}</td>
+        </tr>
+    </table>
+    {% endfor %}    
+{% endblock content %}
+    
